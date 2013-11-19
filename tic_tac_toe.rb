@@ -2,13 +2,16 @@ class TicTacToe
 
   PLAYERS = [:computer, :human]
 
-  attr_reader :current_player, :first_player
-  attr_accessor :board, :winner
+  attr_reader :first_player, :computer_mark, :human_mark
+  attr_accessor :board, :winner, :current_player
 
   def initialize
     @board = ["","","","","","","","",""]
     @first_player = get_random_player
     @current_player = @first_player
+    @computer_mark = get_computer_mark
+    @human_mark = get_human_mark
+    @winner = false
   end
 
   def get_random_player
@@ -60,5 +63,32 @@ class TicTacToe
     else
       self.winner = (PLAYERS - [self.first_player]).pop
     end
+  end
+
+  def get_computer_mark
+    if @first_player == :computer
+      "x"
+    else
+      "o"
+    end
+  end
+
+  def get_human_mark
+    if @first_player == :human
+      "x"
+    else
+      "o"
+    end
+  end
+
+  def display
+    system("clear")
+    puts "Tic-Tac Toe"
+    puts "-----------"
+    puts "computer player is #{@computer_mark}"
+    puts "you are #{@human_mark}"
+    puts "-----"
+    puts self
+    puts "-----"
   end
 end
