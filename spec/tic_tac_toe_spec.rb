@@ -24,4 +24,26 @@ describe TicTacToe do
       expect(@game.current_player).to be_a Symbol
     end
   end
+
+  describe "#to_s" do
+    it "should output the board" do
+      expect(@game.to_s).to include "|"
+    end
+  end
+
+  describe "#over?" do
+    it "should be true when all 9 squares are filled" do
+      @game.board = ["o","o","x","x","x","o","o","x","x"]
+      expect(@game.over?).to be_true
+    end
+
+    it "should be true when a player wins" do
+      @game.board = ["o","","x","o","x","","o","x",""]
+      expect(@game.over?).to be_true
+    end
+
+    # it "should be false if the board isn't full and no one has won" do
+    #   expect(@game.over?).to be_false
+    # end
+  end
 end
