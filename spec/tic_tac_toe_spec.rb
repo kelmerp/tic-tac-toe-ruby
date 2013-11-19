@@ -13,7 +13,13 @@ describe TicTacToe do
     it "should initialize an empty board" do
       expect(@game.board).to eq(["","","","","","","","",""])
     end
-    
+
+  describe "#get_random_player" do
+    it "should return a player" do
+      expect(@game.get_random_player).to  be_a Symbol
+    end
+  end
+
     it "should have a current player" do
       expect(@game.current_player).to be_a Symbol
     end
