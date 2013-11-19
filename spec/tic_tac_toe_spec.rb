@@ -45,5 +45,16 @@ describe TicTacToe do
     it "should be false if the board isn't full and no one has won" do
       expect(@game.over?).to be_false
     end
+
+  describe "#winner?" do
+    it "should return true if there is a winner" do
+      @game.board = ["o","","x","o","x","","o","x",""]
+      expect(@game.winner?).to be_true
+    end
+
+    it "should return false if there is no winner" do
+      expect(@game.winner?).to be_false
+    end
+  end
   end
 end
