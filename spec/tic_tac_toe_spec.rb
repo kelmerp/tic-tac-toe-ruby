@@ -57,4 +57,17 @@ describe TicTacToe do
       expect(@game.winner?).to be_false
     end
   end
+
+  describe "#get_computer_mark" do
+    it "should return an x or o" do
+      expect(@game.get_computer_mark).to be_a String
+    end
+  end
+
+  describe "#computer_move" do
+    it "plays a turn for the computer player" do
+      @game.computer_move
+      expect(@game.board.empty?).to be_false
+    end
+  end
 end
