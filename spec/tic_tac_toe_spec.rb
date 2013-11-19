@@ -42,8 +42,8 @@ describe TicTacToe do
       expect(@game.over?).to be_true
     end
 
-    # it "should be false if the board isn't full and no one has won" do
-    #   expect(@game.over?).to be_false
-    # end
+    it "should be false if the board isn't full and no one has won" do
+      expect(@game.over?).to be_false
+    end
   end
 end
