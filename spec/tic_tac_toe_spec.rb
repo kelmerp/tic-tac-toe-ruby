@@ -13,5 +13,9 @@ describe TicTacToe do
     it "should initialize an empty board" do
       expect(@game.board).to eq(["","","","","","","","",""])
     end
+    
+    it "should have a current player" do
+      expect(@game.current_player).to be_a Symbol
+    end
   end
 end
