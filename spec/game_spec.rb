@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe TicTacToe do
+describe Game do
   before :each do
-    @game = TicTacToe.new
+    @game = Game.new
   end
 
   describe "#new" do
-    it "creates a TicTacToe object" do
-      expect(@game).to be_an_instance_of TicTacToe
+    it "creates a Game object" do
+      expect(@game).to be_an_instance_of Game
     end
 
     it "should initialize an empty board" do
@@ -21,7 +21,7 @@ describe TicTacToe do
 
   describe "#get_random_player" do
     it "should return a player" do
-      expect(@game.get_random_player).to  be_a Symbol
+      expect(@game.get_random_player).to be_a Symbol
     end
   end
 
