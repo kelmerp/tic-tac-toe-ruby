@@ -242,6 +242,8 @@
       mark_board(1)
     elsif @board[0] == c && @board[4] == c && @board[1] == h && @board[6] == ""
       mark_board(6)
+    elsif @board[4] == h && @board[8] == h && @board[2] == ""
+      mark_board(2)
     else
       mark_board(@board.index(""))
     end
