@@ -1,4 +1,4 @@
-class Game
+  class Game
 
   PLAYERS = [:computer, :human]
 
@@ -18,23 +18,20 @@ class Game
     PLAYERS.sample
   end
 
-  def to_s
-    string = ""
-
+  def print_board
     0.upto(8) do |n|
       if @board[n] == "x" || @board[n] == "o"
-        string += "#{@board[n]}"
+        print "#{@board[n]}"
       else
-        string += "#{n}"
+        print "#{n}"
       end
 
       if n == 2 || n == 5 || n == 8
-        string += "\n"
+        print "\n"
       else
-        string += "|"
+        print "|"
       end
     end
-    string
   end
 
   def over?
@@ -88,7 +85,7 @@ class Game
     puts "computer player is #{@computer_mark}"
     puts "you are #{@human_mark}"
     puts "-----"
-    puts self
+    print_board
     puts "-----"
   end
 
