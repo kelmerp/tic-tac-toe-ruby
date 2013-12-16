@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'stringio'
 
 describe Game do
   before :each do
@@ -25,9 +26,14 @@ describe Game do
     end
   end
 
-  describe "#to_s" do
+  describe "#print_board" do
+
     it "should output the board" do
-      expect(@game.to_s).to include "|"
+      original_stdout = $stdout
+      $stdout = fake = StringIO.new
+      @game.print_board
+      $stdout = original_stdout
+      expect(fake.string).to include "|"
     end
   end
 
@@ -68,6 +74,16 @@ describe Game do
     it "plays a turn for the computer player" do
       @game.computer_move
       expect(@game.board.empty?).to be_false
+    end
+  end
+
+  describe "#winning_move" do
+    it "makes a winning move (3 in a row) for the computer player" do
+      @game.board = ["x","x","","","","","","",""]
+      @game.stub(:first_player => :computer)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "x")
+      expect(@game.winning_move).to eq 2
     end
   end
 end
