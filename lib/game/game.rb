@@ -98,7 +98,7 @@ class Game
     elsif next_move = blocking_move #returns index of blocking move or false
       mark_board(next_move)
     else
-      best_move
+      mark_board(best_move)
     end
 
     self.current_player = :human
@@ -227,25 +227,25 @@ class Game
     c = computer_mark
 
     if first_player == :computer && board[0] == ""
-      mark_board(0)
+      0
     elsif first_player == :human  && board[4] == ""
-      mark_board(4)
+      4
     elsif first_player == :computer && board[4] == ""
-      mark_board(4)
+      4
     elsif first_player == :human && board.count("x") == 1  && board[0] == ""
-      mark_board(0)
+      0
     elsif board[0] == c && board[4] == h && board[8] == ""
-      mark_board(8)
+      8
     elsif board[0] == h && board[8] == h && board[1] == ""
-      mark_board(1)
+      1
     elsif board[2] == h && board[6] == h && board[1] == ""
-      mark_board(1)
+      1
     elsif board[0] == c && board[4] == c && board[1] == h && board[6] == ""
-      mark_board(6)
+      6
     elsif board[4] == h && board[8] == h && board[2] == ""
-      mark_board(2)
+      2
     else
-      mark_board(board.index(""))
+      board.index("")
     end
   end
 
