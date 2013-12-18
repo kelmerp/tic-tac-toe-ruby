@@ -75,25 +75,18 @@ describe Game do
       @game.computer_move
       expect(@game.board.empty?).to be_false
     end
+  end
 
-    it "makes the best available move that is neither a winning or blocking move" do
-      @game.board = ["x","o","",
-                      "","x","",
-                      "","","o"]
+  describe "#winning_move" do
+    before :each do
       @game.stub(:first_player => :computer)
       @game.current_player = :computer
       @game.stub(:computer_mark => "x")
       @game.stub(:human_mark => "0")
     end
-  end
 
-  describe "#winning_move" do
     it "makes a winning move (3 in a row) for the computer player" do
       @game.board = ["x","x","","","","","","",""]
-      @game.stub(:first_player => :computer)
-      @game.current_player = :computer
-      @game.stub(:computer_mark => "x")
-      @game.stub(:human_mark => "0")
       expect(@game.winning_move).to eq 2
     end
   end
@@ -101,11 +94,81 @@ describe Game do
   describe "#blocking_move" do
     it "blocks human player from winning" do
       @game.board = ["x","x","","","","","","",""]
+      expect(@game.blocking_move).to eq 2
+    end
+  end
+
+  describe "#best_move" do
+    it "blocks the trap when human player takes position 0 and 7" do
+      @game.board = ["x","","","","o","","","x",""]
       @game.stub(:first_player => :human)
       @game.current_player = :computer
       @game.stub(:computer_mark => "o")
       @game.stub(:human_mark => "x")
-      expect(@game.blocking_move).to eq 2
+      expect(@game.best_move).to eq 6
+    end
+
+    it "blocks the trap when human player takes position 0 and 5" do
+      @game.board = ["x","","","","o","x","","",""]
+      @game.stub(:first_player => :human)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "o")
+      @game.stub(:human_mark => "x")
+      expect(@game.best_move).to eq 2
+    end
+
+    it "blocks the trap when human player takes position 1 and 6" do
+      @game.board = ["","x","","","o","","x","",""]
+      @game.stub(:first_player => :human)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "o")
+      @game.stub(:human_mark => "x")
+      expect(@game.best_move).to eq 0
+    end
+        
+    it "blocks the trap when human player takes position 1 and 8" do
+      @game.board = ["","x","","","o","","","","x"]
+      @game.stub(:first_player => :human)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "o")
+      @game.stub(:human_mark => "x")
+      expect(@game.best_move).to eq 2
+    end
+        
+    it "blocks the trap when human player takes position 2 and 3" do
+      @game.board = ["","","x","x","o","","","",""]
+      @game.stub(:first_player => :human)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "o")
+      @game.stub(:human_mark => "x")
+      expect(@game.best_move).to eq 0
+    end
+        
+    it "blocks the trap when human player takes position 2 and 7" do
+      @game.board = ["","","x","","o","","","x",""]
+      @game.stub(:first_player => :human)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "o")
+      @game.stub(:human_mark => "x")
+      expect(@game.best_move).to eq 8
+    end
+        
+    it "blocks the trap when human player takes position 3 and 8" do
+      @game.board = ["","","","x","o","","","","x"]
+      @game.stub(:first_player => :human)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "o")
+      @game.stub(:human_mark => "x")
+      expect(@game.best_move).to eq 6
+    end
+        
+    it "blocks the trap when human player takes position 5 and 6" do
+      @game.board = ["","","","","o","x","x","",""]
+      @game.stub(:first_player => :human)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "o")
+      @game.stub(:human_mark => "x")
+      expect(@game.best_move).to eq 8
     end
   end
 end
