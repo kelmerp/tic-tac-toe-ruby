@@ -75,6 +75,16 @@ describe Game do
       @game.computer_move
       expect(@game.board.empty?).to be_false
     end
+
+    it "makes the best available move that is neither a winning or blocking move" do
+      @game.board = ["x","o","",
+                      "","x","",
+                      "","","o"]
+      @game.stub(:first_player => :computer)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "x")
+      @game.stub(:human_mark => "0")
+    end
   end
 
   describe "#winning_move" do

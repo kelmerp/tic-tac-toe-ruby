@@ -232,8 +232,6 @@ class Game
       4
     elsif first_player == :computer && board[4] == ""
       4
-    elsif first_player == :human && board.count("x") == 1  && board[0] == ""
-      0
     elsif board[0] == c && board[4] == h && board[8] == ""
       8
     elsif board[0] == h && board[8] == h && board[1] == ""
@@ -260,8 +258,8 @@ class Game
       2  
     elsif board[3] == h && board[2] == h && board[8] == ""
       8  
-    elsif board[7] == h && board[2] == h && board[0] == ""
-      0  
+    elsif board[7] == h && board[2] == h && board[8] == ""
+      8  
     elsif board[7] == h && board[0] == h && board[2] == ""
       2 
     elsif board[5] == h && board[0] == h && board[6] == ""
