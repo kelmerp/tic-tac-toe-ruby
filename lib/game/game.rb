@@ -258,8 +258,6 @@ class Game
       8
     elsif board[5] == h && board[0] == h && board[2] == ""
       2
-    elsif board[2] == h && board[3] == h && board[0] == ""
-      0
     else
       board.index("")
     end
