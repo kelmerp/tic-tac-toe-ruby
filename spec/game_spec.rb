@@ -94,6 +94,10 @@ describe Game do
   describe "#blocking_move" do
     it "blocks human player from winning" do
       @game.board = ["x","x","","","","","","",""]
+      @game.stub(:first_player => :human)
+      @game.current_player = :computer
+      @game.stub(:computer_mark => "o")
+      @game.stub(:human_mark => "x")
       expect(@game.blocking_move).to eq 2
     end
   end
