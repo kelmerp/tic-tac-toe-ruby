@@ -252,6 +252,22 @@ class Game
       2    
     elsif board[2] == h && board[3] == h && board[0] == ""
       0
+    elsif board[1] == h && board[6] == h && board[8] == ""
+      8 
+    elsif board[1] == h && board[8] == h && board[6] == ""
+      6  
+    elsif board[3] == h && board[8] == h && board[2] == ""
+      2  
+    elsif board[3] == h && board[2] == h && board[8] == ""
+      8  
+    elsif board[7] == h && board[2] == h && board[0] == ""
+      0  
+    elsif board[7] == h && board[0] == h && board[2] == ""
+      2 
+    elsif board[5] == h && board[0] == h && board[6] == ""
+      6  
+    elsif board[5] == h && board[6] == h && board[0] == ""
+      0  
     else
       board.index("")
     end
