@@ -2,7 +2,7 @@ require_relative './game/game'
 
 game = Game.new
 
-begin 
+until game.over?
   game.display
   if game.first_turn?
     if game.first_player == :computer
@@ -24,7 +24,7 @@ begin
       game.get_user_input
     end
   end
-end until game.over?
+end 
 
 game.display
 if game.winner
