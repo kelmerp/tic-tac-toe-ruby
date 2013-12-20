@@ -286,6 +286,6 @@ class Game
   end
 
   def first_turn?
-    true if board == ["","","","","","","","",""]
+    board == ["","","","","","","","",""]
   end
 end
