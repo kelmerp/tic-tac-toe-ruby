@@ -46,7 +46,7 @@ class Game
         sleep 2
         computer_move
       else
-        get_user_input
+        human_move
       end
     end
     display
@@ -302,7 +302,7 @@ class Game
     end
   end
 
-  def get_user_input
+  def human_move
     begin
       puts "type the number where you want to place your marker or q to quit"
       print ">"
