@@ -39,8 +39,6 @@ class Game
       display
       print_first_player if first_turn?
 
-      puts "Current player: #{current_player}"
-
       if current_player == :computer
         puts "Executing computer move"
         sleep 2
@@ -114,6 +112,7 @@ class Game
     puts "-----"
     print_board
     puts "-----"
+    puts "Current player: #{current_player}"
   end
 
   def computer_move
