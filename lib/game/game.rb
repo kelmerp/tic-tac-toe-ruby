@@ -34,6 +34,33 @@ class Game
     end
   end
 
+  def play
+    until over?
+      display
+      if first_turn?
+        if first_player == :computer
+          puts "Computer gets to go first"
+          sleep 2
+          computer_move
+        else
+          puts "You get to go first"
+          get_user_input
+        end
+      else
+        puts "Current player: #{current_player}"
+
+        if current_player == :computer
+          puts "Executing computer move"
+          sleep 2
+          computer_move
+        else
+          get_user_input
+        end
+      end
+    end 
+    show_winner
+  end
+
   def over?
     winner? || !board.include?("")
   end
@@ -287,5 +314,13 @@ class Game
 
   def first_turn?
     board == ["","","","","","","","",""]
+  end
+
+  def show_winner
+    if winner
+      puts "#{winner} is the winner"
+    else
+      puts "The game is a tie"
+    end
   end
 end
