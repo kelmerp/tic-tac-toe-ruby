@@ -73,9 +73,9 @@ class Game
     end
 
     if winner == "x"
-      self.winner = self.first_player
+      winner = first_player
     else
-      self.winner = (PLAYERS - [self.first_player]).pop
+      winner = (PLAYERS - [first_player]).pop
     end
   end
 
@@ -127,7 +127,7 @@ class Game
       mark_board(best_move)
     end
 
-    self.current_player = :human
+    next_player
   end
 
   def winning_move
@@ -307,8 +307,16 @@ class Game
       print ">"
       input = gets.chomp
       exit if input.downcase == "q"
-    end until self.mark_board(input.to_i)
-    self.current_player = :computer
+    end until mark_board(input.to_i)
+    next_player
+  end
+
+  def next_player
+    if self.current_player == :human
+      self.current_player = :computer
+    else
+      self.current_player = :human
+    end
   end
 
   def first_turn?
