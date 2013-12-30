@@ -305,8 +305,9 @@ class Game
     begin
       puts "type the number where you want to place your marker or q to quit"
       print ">"
-      input = gets.chomp
+      input = gets.strip
       exit if input.downcase == "q"
+      redo unless input.match(/[0-8]/)
     end until mark_board(input.to_i)
     next_player
   end
