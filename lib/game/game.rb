@@ -37,27 +37,19 @@ class Game
   def play
     until over?
       display
-      if first_turn?
-        if first_player == :computer
-          puts "Computer gets to go first"
-          sleep 2
-          computer_move
-        else
-          puts "You get to go first"
-          get_user_input
-        end
-      else
-        puts "Current player: #{current_player}"
+      print_first_player if first_turn?
 
-        if current_player == :computer
-          puts "Executing computer move"
-          sleep 2
-          computer_move
-        else
-          get_user_input
-        end
+      puts "Current player: #{current_player}"
+
+      if current_player == :computer
+        puts "Executing computer move"
+        sleep 2
+        computer_move
+      else
+        get_user_input
       end
-    end 
+    end
+    display
     show_winner
   end
 
@@ -86,6 +78,14 @@ class Game
       self.winner = self.first_player
     else
       self.winner = (PLAYERS - [self.first_player]).pop
+    end
+  end
+
+  def print_first_player
+    if first_player == :computer
+      puts "Computer gets to go first"
+    else
+      puts "You get to go first"
     end
   end
 
