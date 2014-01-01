@@ -64,30 +64,6 @@ class Game
     winner? || !board.include?("")
   end
 
-  # def winner?
-  #   winner = ""
-  #   if (board[0] == board[1] && board[1] == board[2] && board[0] != "") ||
-  #     (board[0] == board[4] && board[4] == board[8] && board[0] != "") ||
-  #     (board[0] == board[3] && board[3] == board[6] && board[0] != "")
-  #       winner = board[0]
-  #   elsif (board[1] == board[4] && board[4] == board[7] && board[4] != "") ||
-  #     (board[2] == board[4] && board[4] == board[6] && board[4] != "") ||
-  #     (board[3] == board[4] && board[4] == board[5] && board[4] != "")
-  #       winner = board[4]
-  #   elsif (board[6] == board[7] && board[7] == board[8] && board[8] != "") ||
-  #     (board[2] == board[5] && board[5] == board[8] && board[8] != "")
-  #       winner = board[8]
-  #   else #no winner
-  #     return false
-  #   end
-
-  #   if winner == "x"
-  #     winner = first_player
-  #   else
-  #     winner = (PLAYERS - [first_player]).pop
-  #   end
-  # end
-
   def winner?
     @winning_lines.each do |a, b, c|
       return true if board[a] == board[b] && board[b] == board[c] && board[a] != ""
