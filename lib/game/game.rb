@@ -333,7 +333,7 @@ class Game
   def show_winner
     get_winner
     if @winner
-      puts "#{winner} is the winner"
+      puts "#{@winner} is the winner"
     else
       puts "The game is a tie"
     end
