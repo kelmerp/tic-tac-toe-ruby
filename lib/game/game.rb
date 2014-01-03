@@ -1,3 +1,5 @@
+require_relative 'board'
+
 class Game
 
   PLAYERS = [:computer, :human]
@@ -6,7 +8,7 @@ class Game
   attr_accessor :board, :current_player
 
   def initialize
-    @board = ["","","","","","","","",""]
+    @board = Board.new
     @winning_lines = get_winning_lines
     @first_player = get_random_player
     @current_player = @first_player
@@ -27,21 +29,7 @@ class Game
     PLAYERS.sample
   end
 
-  def print_board
-    0.upto(8) do |n|
-      if board[n] == "x" || board[n] == "o"
-        print "#{board[n]}"
-      else
-        print "#{n}"
-      end
 
-      if n == 2 || n == 5 || n == 8
-        print "\n"
-      else
-        print "|"
-      end
-    end
-  end
 
   def play
     until over?
@@ -61,20 +49,23 @@ class Game
   end
 
   def over?
-    winner? || !board.include?("")
+    winner? || board.full?
   end
 
   def winner?
     @winning_lines.each do |a, b, c|
-      return true if board[a] == board[b] && board[b] == board[c] && board[a] != ""
+      return true if board.content[a] == board.content[b] && 
+      board.content[b] == board.content[c] && 
+      board.content[a] != ""
     end
     false
   end
 
   def get_winner
     @winning_lines.each do |a, b, c|
-      if board[a] == board[b] && board[b] == board[c] && board[a] != ""
-        @winner = board[a]
+      if board.content[a] == board.content[b] &&
+       board.content[b] == board.content[c] && board.content[a] != ""
+        @winner = board.content[a]
       end
     end
 
@@ -116,7 +107,7 @@ class Game
     puts "computer player is #{computer_mark}"
     puts "you are #{human_mark}"
     puts "-----"
-    print_board
+    board.show
     puts "-----"
     puts "Current player: #{current_player}"
   end
@@ -126,11 +117,11 @@ class Game
     next_move = false
 
     if next_move = winning_move #returns index of winning move or false
-      mark_board(next_move)
+      board.mark(next_move, computer_mark)
     elsif next_move = blocking_move #returns index of blocking move or false
-      mark_board(next_move)
+      board.mark(next_move, computer_mark)
     else
-      mark_board(best_move)
+      board.mark(best_move, computer_mark)
     end
 
     next_player
@@ -140,55 +131,55 @@ class Game
     c = computer_mark
     c_marks = []
 
-    board.each_with_index { |square, i| c_marks << i if square == c }
+    board.content.each_with_index { |square, i| c_marks << i if square == c }
 
-    if c_marks.include?(0) && c_marks.include?(1) && board[2] == ""
+    if c_marks.include?(0) && c_marks.include?(1) && board.content[2] == ""
       2
-    elsif c_marks.include?(0) && c_marks.include?(2) && board[1] == ""
+    elsif c_marks.include?(0) && c_marks.include?(2) && board.content[1] == ""
       1
-    elsif c_marks.include?(1) && c_marks.include?(2) && board[0] == ""
+    elsif c_marks.include?(1) && c_marks.include?(2) && board.content[0] == ""
       0
-    elsif c_marks.include?(3) && c_marks.include?(4) && board[5] == ""
+    elsif c_marks.include?(3) && c_marks.include?(4) && board.content[5] == ""
       5
-    elsif c_marks.include?(3) && c_marks.include?(5) && board[4] == ""
+    elsif c_marks.include?(3) && c_marks.include?(5) && board.content[4] == ""
       4
-    elsif c_marks.include?(4) && c_marks.include?(5) && board[3] == ""
+    elsif c_marks.include?(4) && c_marks.include?(5) && board.content[3] == ""
       3
-    elsif c_marks.include?(6) && c_marks.include?(7) && board[8] == ""
+    elsif c_marks.include?(6) && c_marks.include?(7) && board.content[8] == ""
       8
-    elsif c_marks.include?(6) && c_marks.include?(8) && board[7] == ""
+    elsif c_marks.include?(6) && c_marks.include?(8) && board.content[7] == ""
       7
-    elsif c_marks.include?(7) && c_marks.include?(8) && board[6] == ""
+    elsif c_marks.include?(7) && c_marks.include?(8) && board.content[6] == ""
       6
-    elsif c_marks.include?(0) && c_marks.include?(3) && board[6] == ""
+    elsif c_marks.include?(0) && c_marks.include?(3) && board.content[6] == ""
       6
-    elsif c_marks.include?(0) && c_marks.include?(6) && board[3] == ""
+    elsif c_marks.include?(0) && c_marks.include?(6) && board.content[3] == ""
       3
-    elsif c_marks.include?(3) && c_marks.include?(6) && board[0] == ""
+    elsif c_marks.include?(3) && c_marks.include?(6) && board.content[0] == ""
       0
-    elsif c_marks.include?(1) && c_marks.include?(4) && board[7] == ""
+    elsif c_marks.include?(1) && c_marks.include?(4) && board.content[7] == ""
       7
-    elsif c_marks.include?(1) && c_marks.include?(7) && board[4] == ""
+    elsif c_marks.include?(1) && c_marks.include?(7) && board.content[4] == ""
       4
-    elsif c_marks.include?(4) && c_marks.include?(7) && board[1] == ""
+    elsif c_marks.include?(4) && c_marks.include?(7) && board.content[1] == ""
       1
-    elsif c_marks.include?(2) && c_marks.include?(5) && board[8] == ""
+    elsif c_marks.include?(2) && c_marks.include?(5) && board.content[8] == ""
       8
-    elsif c_marks.include?(2) && c_marks.include?(8) && board[5] == ""
+    elsif c_marks.include?(2) && c_marks.include?(8) && board.content[5] == ""
       5
-    elsif c_marks.include?(5) && c_marks.include?(8) && board[2] == ""
+    elsif c_marks.include?(5) && c_marks.include?(8) && board.content[2] == ""
       2
-    elsif c_marks.include?(0) && c_marks.include?(4) && board[8] == ""
+    elsif c_marks.include?(0) && c_marks.include?(4) && board.content[8] == ""
       8
-    elsif c_marks.include?(0) && c_marks.include?(8) && board[4] == ""
+    elsif c_marks.include?(0) && c_marks.include?(8) && board.content[4] == ""
       4
-    elsif c_marks.include?(4) && c_marks.include?(8) && board[0] == ""
+    elsif c_marks.include?(4) && c_marks.include?(8) && board.content[0] == ""
       0
-    elsif c_marks.include?(2) && c_marks.include?(4) && board[6] == ""
+    elsif c_marks.include?(2) && c_marks.include?(4) && board.content[6] == ""
       6
-    elsif c_marks.include?(2) && c_marks.include?(6) && board[4] == ""
+    elsif c_marks.include?(2) && c_marks.include?(6) && board.content[4] == ""
       4
-    elsif c_marks.include?(4) && c_marks.include?(6) && board[2] == ""
+    elsif c_marks.include?(4) && c_marks.include?(6) && board.content[2] == ""
       2
     else
       false
@@ -199,55 +190,55 @@ class Game
     h = human_mark
     h_marks = []
 
-    board.each_with_index { |square, i| h_marks << i if square == h }
+    board.content.each_with_index { |square, i| h_marks << i if square == h }
     
-    if h_marks.include?(0) && h_marks.include?(1) && board[2] == ""
+    if h_marks.include?(0) && h_marks.include?(1) && board.content[2] == ""
       2
-    elsif h_marks.include?(0) && h_marks.include?(2) && board[1] == ""
+    elsif h_marks.include?(0) && h_marks.include?(2) && board.content[1] == ""
       1
-    elsif h_marks.include?(1) && h_marks.include?(2) && board[0] == "" 
+    elsif h_marks.include?(1) && h_marks.include?(2) && board.content[0] == "" 
       0
-    elsif h_marks.include?(3) && h_marks.include?(4) && board[5] == ""
+    elsif h_marks.include?(3) && h_marks.include?(4) && board.content[5] == ""
       5
-    elsif h_marks.include?(3) && h_marks.include?(5) && board[4] == ""
+    elsif h_marks.include?(3) && h_marks.include?(5) && board.content[4] == ""
       4
-    elsif h_marks.include?(4) && h_marks.include?(5) && board[3] == ""
+    elsif h_marks.include?(4) && h_marks.include?(5) && board.content[3] == ""
       3
-    elsif h_marks.include?(6) && h_marks.include?(7) && board[8] == ""
+    elsif h_marks.include?(6) && h_marks.include?(7) && board.content[8] == ""
       8
-    elsif h_marks.include?(6) && h_marks.include?(8) && board[7] == ""
+    elsif h_marks.include?(6) && h_marks.include?(8) && board.content[7] == ""
       7
-    elsif h_marks.include?(7) && h_marks.include?(8) && board[6] == ""
+    elsif h_marks.include?(7) && h_marks.include?(8) && board.content[6] == ""
       6
-    elsif h_marks.include?(0) && h_marks.include?(3) && board[6] == ""
+    elsif h_marks.include?(0) && h_marks.include?(3) && board.content[6] == ""
       6
-    elsif h_marks.include?(0) && h_marks.include?(6) && board[3] == ""
+    elsif h_marks.include?(0) && h_marks.include?(6) && board.content[3] == ""
       3
-    elsif h_marks.include?(3) && h_marks.include?(6) && board[0] == ""
+    elsif h_marks.include?(3) && h_marks.include?(6) && board.content[0] == ""
       0
-    elsif h_marks.include?(1) && h_marks.include?(4) && board[7] == ""
+    elsif h_marks.include?(1) && h_marks.include?(4) && board.content[7] == ""
       7
-    elsif h_marks.include?(1) && h_marks.include?(7) && board[4] == ""
+    elsif h_marks.include?(1) && h_marks.include?(7) && board.content[4] == ""
       4
-    elsif h_marks.include?(4) && h_marks.include?(7) && board[1] == ""
+    elsif h_marks.include?(4) && h_marks.include?(7) && board.content[1] == ""
       1
-    elsif h_marks.include?(2) && h_marks.include?(5) && board[8] == ""
+    elsif h_marks.include?(2) && h_marks.include?(5) && board.content[8] == ""
       8
-    elsif h_marks.include?(2) && h_marks.include?(8) && board[5] == ""
+    elsif h_marks.include?(2) && h_marks.include?(8) && board.content[5] == ""
       5
-    elsif h_marks.include?(5) && h_marks.include?(8) && board[2] == ""
+    elsif h_marks.include?(5) && h_marks.include?(8) && board.content[2] == ""
       2
-    elsif h_marks.include?(0) && h_marks.include?(4) && board[8] == ""
+    elsif h_marks.include?(0) && h_marks.include?(4) && board.content[8] == ""
       8
-    elsif h_marks.include?(0) && h_marks.include?(8) && board[4] == ""
+    elsif h_marks.include?(0) && h_marks.include?(8) && board.content[4] == ""
       4
-    elsif h_marks.include?(4) && h_marks.include?(8) && board[0] == ""
+    elsif h_marks.include?(4) && h_marks.include?(8) && board.content[0] == ""
       0
-    elsif h_marks.include?(2) && h_marks.include?(4) && board[6] == ""
+    elsif h_marks.include?(2) && h_marks.include?(4) && board.content[6] == ""
       6
-    elsif h_marks.include?(2) && h_marks.include?(6) && board[4] == ""
+    elsif h_marks.include?(2) && h_marks.include?(6) && board.content[4] == ""
       4
-    elsif h_marks.include?(4) && h_marks.include?(6) && board[2] == ""
+    elsif h_marks.include?(4) && h_marks.include?(6) && board.content[2] == ""
       2
     else
       false
@@ -258,54 +249,44 @@ class Game
     h = human_mark
     c = computer_mark
 
-    if first_player == :computer && board[0] == ""
+    if first_player == :computer && board.content[0] == ""
       0
-    elsif first_player == :human  && board[4] == ""
+    elsif first_player == :human  && board.content[4] == ""
       4
-    elsif first_player == :computer && board[4] == ""
+    elsif first_player == :computer && board.content[4] == ""
       4
-    elsif board[0] == c && board[4] == h && board[8] == ""
+    elsif board.content[0] == c && board.content[4] == h && board.content[8] == ""
       8
-    elsif board[0] == h && board[8] == h && board[1] == ""
+    elsif board.content[0] == h && board.content[8] == h && board.content[1] == ""
       1
-    elsif board[2] == h && board[6] == h && board[1] == ""
+    elsif board.content[2] == h && board.content[6] == h && board.content[1] == ""
       1
-    elsif board[0] == c && board[4] == c && board[1] == h && board[6] == ""
+    elsif board.content[0] == c && board.content[4] == c && board.content[1] == h && board.content[6] == ""
       6
-    elsif board[4] == h && board[8] == h && board[2] == ""
+    elsif board.content[4] == h && board.content[8] == h && board.content[2] == ""
       2
-    elsif board[0] == h && board[7] == h && board[6] == ""
+    elsif board.content[0] == h && board.content[7] == h && board.content[6] == ""
       6    
-    elsif board[6] == h && board[5] == h && board[8] == ""
+    elsif board.content[6] == h && board.content[5] == h && board.content[8] == ""
       8    
-    elsif board[8] == h && board[1] == h && board[2] == ""
+    elsif board.content[8] == h && board.content[1] == h && board.content[2] == ""
       2    
-    elsif board[2] == h && board[3] == h && board[0] == ""
+    elsif board.content[2] == h && board.content[3] == h && board.content[0] == ""
       0
-    elsif board[1] == h && board[6] == h && board[0] == ""
+    elsif board.content[1] == h && board.content[6] == h && board.content[0] == ""
       0 
-    elsif board[3] == h && board[8] == h && board[6] == ""
+    elsif board.content[3] == h && board.content[8] == h && board.content[6] == ""
       6   
-    elsif board[7] == h && board[2] == h && board[8] == ""
+    elsif board.content[7] == h && board.content[2] == h && board.content[8] == ""
       8
-    elsif board[5] == h && board[0] == h && board[2] == ""
+    elsif board.content[5] == h && board.content[0] == h && board.content[2] == ""
       2
     else
-      board.index("")
+      board.content.index("")
     end
   end
 
-  def mark_board(index)
-    if board[index] != ""
-      false
-    elsif current_player == first_player
-      board[index] = "x"
-      true
-    else
-      board[index] = "o"
-      true
-    end
-  end
+
 
   def human_move
     begin
@@ -314,7 +295,7 @@ class Game
       input = gets.strip
       exit if input.downcase == "q"
       redo unless input.match(/[0-8]/)
-    end until mark_board(input.to_i)
+    end until board.mark(input.to_i, human_mark)
     next_player
   end
 
@@ -327,7 +308,7 @@ class Game
   end
 
   def first_turn?
-    board == ["","","","","","","","",""]
+    board.empty?
   end
 
   def show_winner
