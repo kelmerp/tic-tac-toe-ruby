@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'stringio'
 
 describe Game do
   before :each do
@@ -11,8 +10,8 @@ describe Game do
       expect(@game).to be_an_instance_of Game
     end
 
-    it "should initialize an empty board" do
-      expect(@game.board).to eq(["","","","","","","","",""])
+    it "should have an empty board" do
+      expect(@game.board.content).to eq(["","","","","","","","",""])
     end
 
     it "should have a current player" do
@@ -26,25 +25,14 @@ describe Game do
     end
   end
 
-  describe "#print_board" do
-
-    it "should output the board" do
-      original_stdout = $stdout
-      $stdout = fake = StringIO.new
-      @game.print_board
-      $stdout = original_stdout
-      expect(fake.string).to include "|"
-    end
-  end
-
   describe "#over?" do
     it "should be true when all 9 squares are filled" do
-      @game.board = ["o","o","x","x","x","o","o","x","x"]
+      @game.board.content = ["o","o","x","x","x","o","o","x","x"]
       expect(@game.over?).to be_true
     end
 
     it "should be true when a player wins" do
-      @game.board = ["o","","x","o","x","","o","x",""]
+      @game.board.content = ["o","","x","o","x","","o","x",""]
       expect(@game.over?).to be_true
     end
 
@@ -55,7 +43,7 @@ describe Game do
 
   describe "#winner?" do
     it "should return true if there is a winner" do
-      @game.board = ["o","","x","o","x","","o","x",""]
+      @game.board.content = ["o","","x","o","x","","o","x",""]
       expect(@game.winner?).to be_true
     end
 
@@ -86,14 +74,14 @@ describe Game do
     end
 
     it "makes a winning move (3 in a row) for the computer player" do
-      @game.board = ["x","x","","","","","","",""]
+      @game.board.content = ["x","x","","","","","","",""]
       expect(@game.winning_move).to eq 2
     end
   end
 
   describe "#blocking_move" do
     it "blocks human player from winning" do
-      @game.board = ["x","x","","","","","","",""]
+      @game.board.content = ["x","x","","","","","","",""]
       @game.stub(:first_player => :human)
       @game.current_player = :computer
       @game.stub(:computer_mark => "o")
@@ -113,42 +101,42 @@ describe Game do
       end
 
       it "blocks the trap when human player takes position 0 and 7" do
-        @game.board = ["x","","","","o","","","x",""]
+        @game.board.content = ["x","","","","o","","","x",""]
         expect(@game.best_move).to eq 6
       end
 
       it "blocks the trap when human player takes position 0 and 5" do
-        @game.board = ["x","","","","o","x","","",""]
+        @game.board.content = ["x","","","","o","x","","",""]
         expect(@game.best_move).to eq 2
       end
 
       it "blocks the trap when human player takes position 1 and 6" do
-        @game.board = ["","x","","","o","","x","",""]
+        @game.board.content = ["","x","","","o","","x","",""]
         expect(@game.best_move).to eq 0
       end
           
       it "blocks the trap when human player takes position 1 and 8" do
-        @game.board = ["","x","","","o","","","","x"]
+        @game.board.content = ["","x","","","o","","","","x"]
         expect(@game.best_move).to eq 2
       end
           
       it "blocks the trap when human player takes position 2 and 3" do
-        @game.board = ["","","x","x","o","","","",""]
+        @game.board.content = ["","","x","x","o","","","",""]
         expect(@game.best_move).to eq 0
       end
           
       it "blocks the trap when human player takes position 2 and 7" do
-        @game.board = ["","","x","","o","","","x",""]
+        @game.board.content = ["","","x","","o","","","x",""]
         expect(@game.best_move).to eq 8
       end
           
       it "blocks the trap when human player takes position 3 and 8" do
-        @game.board = ["","","","x","o","","","","x"]
+        @game.board.content = ["","","","x","o","","","","x"]
         expect(@game.best_move).to eq 6
       end
           
       it "blocks the trap when human player takes position 5 and 6" do
-        @game.board = ["","","","","o","x","x","",""]
+        @game.board.content = ["","","","","o","x","x","",""]
         expect(@game.best_move).to eq 8
       end
     end
