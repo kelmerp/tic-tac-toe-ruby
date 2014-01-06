@@ -70,7 +70,7 @@ class Game
     if @winner == "x"
       @winner = first_player
     elsif @winner == "o"
-      @winner = (PLAYERS - [first_player]).pop
+      @winner = second_player
     end
   end
 
@@ -222,5 +222,9 @@ class Game
     else
       puts "The game is a tie"
     end
+  end
+
+  def second_player
+    (PLAYERS - [first_player]).pop
   end
 end
