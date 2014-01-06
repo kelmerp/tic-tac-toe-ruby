@@ -139,62 +139,16 @@ class Game
   end
 
   def blocking_move
-    h = human_mark
-    h_marks = []
-
-    board.content.each_with_index { |square, i| h_marks << i if square == h }
-    
-    if h_marks.include?(0) && h_marks.include?(1) && board.content[2] == ""
-      2
-    elsif h_marks.include?(0) && h_marks.include?(2) && board.content[1] == ""
-      1
-    elsif h_marks.include?(1) && h_marks.include?(2) && board.content[0] == "" 
-      0
-    elsif h_marks.include?(3) && h_marks.include?(4) && board.content[5] == ""
-      5
-    elsif h_marks.include?(3) && h_marks.include?(5) && board.content[4] == ""
-      4
-    elsif h_marks.include?(4) && h_marks.include?(5) && board.content[3] == ""
-      3
-    elsif h_marks.include?(6) && h_marks.include?(7) && board.content[8] == ""
-      8
-    elsif h_marks.include?(6) && h_marks.include?(8) && board.content[7] == ""
-      7
-    elsif h_marks.include?(7) && h_marks.include?(8) && board.content[6] == ""
-      6
-    elsif h_marks.include?(0) && h_marks.include?(3) && board.content[6] == ""
-      6
-    elsif h_marks.include?(0) && h_marks.include?(6) && board.content[3] == ""
-      3
-    elsif h_marks.include?(3) && h_marks.include?(6) && board.content[0] == ""
-      0
-    elsif h_marks.include?(1) && h_marks.include?(4) && board.content[7] == ""
-      7
-    elsif h_marks.include?(1) && h_marks.include?(7) && board.content[4] == ""
-      4
-    elsif h_marks.include?(4) && h_marks.include?(7) && board.content[1] == ""
-      1
-    elsif h_marks.include?(2) && h_marks.include?(5) && board.content[8] == ""
-      8
-    elsif h_marks.include?(2) && h_marks.include?(8) && board.content[5] == ""
-      5
-    elsif h_marks.include?(5) && h_marks.include?(8) && board.content[2] == ""
-      2
-    elsif h_marks.include?(0) && h_marks.include?(4) && board.content[8] == ""
-      8
-    elsif h_marks.include?(0) && h_marks.include?(8) && board.content[4] == ""
-      4
-    elsif h_marks.include?(4) && h_marks.include?(8) && board.content[0] == ""
-      0
-    elsif h_marks.include?(2) && h_marks.include?(4) && board.content[6] == ""
-      6
-    elsif h_marks.include?(2) && h_marks.include?(6) && board.content[4] == ""
-      4
-    elsif h_marks.include?(4) && h_marks.include?(6) && board.content[2] == ""
-      2
-    else
-      false
+    @winning_lines.each do |a, b, c|
+      if @board.content[a] == human_mark && @board.content[b] == human_mark && @board.content[c] == ""
+        return c
+      elsif @board.content[b] == human_mark && @board.content[c] == human_mark && @board.content[a] == ""
+        return a
+      elsif @board.content[a] == human_mark && @board.content[c] == human_mark && @board.content[b] == ""
+        return b
+      end
     end
+    false
   end
 
   def best_move
@@ -237,8 +191,6 @@ class Game
       board.content.index("")
     end
   end
-
-
 
   def human_move
     begin
