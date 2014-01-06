@@ -69,7 +69,7 @@ class Game
 
     if @winner == "x"
       @winner = first_player
-    else
+    elsif @winner == "o"
       @winner = (PLAYERS - [first_player]).pop
     end
   end
