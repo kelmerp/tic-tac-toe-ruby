@@ -29,8 +29,6 @@ class Game
     PLAYERS.sample
   end
 
-
-
   def play
     until over?
       display
@@ -128,62 +126,16 @@ class Game
   end
 
   def winning_move
-    c = computer_mark
-    c_marks = []
-
-    board.content.each_with_index { |square, i| c_marks << i if square == c }
-
-    if c_marks.include?(0) && c_marks.include?(1) && board.content[2] == ""
-      2
-    elsif c_marks.include?(0) && c_marks.include?(2) && board.content[1] == ""
-      1
-    elsif c_marks.include?(1) && c_marks.include?(2) && board.content[0] == ""
-      0
-    elsif c_marks.include?(3) && c_marks.include?(4) && board.content[5] == ""
-      5
-    elsif c_marks.include?(3) && c_marks.include?(5) && board.content[4] == ""
-      4
-    elsif c_marks.include?(4) && c_marks.include?(5) && board.content[3] == ""
-      3
-    elsif c_marks.include?(6) && c_marks.include?(7) && board.content[8] == ""
-      8
-    elsif c_marks.include?(6) && c_marks.include?(8) && board.content[7] == ""
-      7
-    elsif c_marks.include?(7) && c_marks.include?(8) && board.content[6] == ""
-      6
-    elsif c_marks.include?(0) && c_marks.include?(3) && board.content[6] == ""
-      6
-    elsif c_marks.include?(0) && c_marks.include?(6) && board.content[3] == ""
-      3
-    elsif c_marks.include?(3) && c_marks.include?(6) && board.content[0] == ""
-      0
-    elsif c_marks.include?(1) && c_marks.include?(4) && board.content[7] == ""
-      7
-    elsif c_marks.include?(1) && c_marks.include?(7) && board.content[4] == ""
-      4
-    elsif c_marks.include?(4) && c_marks.include?(7) && board.content[1] == ""
-      1
-    elsif c_marks.include?(2) && c_marks.include?(5) && board.content[8] == ""
-      8
-    elsif c_marks.include?(2) && c_marks.include?(8) && board.content[5] == ""
-      5
-    elsif c_marks.include?(5) && c_marks.include?(8) && board.content[2] == ""
-      2
-    elsif c_marks.include?(0) && c_marks.include?(4) && board.content[8] == ""
-      8
-    elsif c_marks.include?(0) && c_marks.include?(8) && board.content[4] == ""
-      4
-    elsif c_marks.include?(4) && c_marks.include?(8) && board.content[0] == ""
-      0
-    elsif c_marks.include?(2) && c_marks.include?(4) && board.content[6] == ""
-      6
-    elsif c_marks.include?(2) && c_marks.include?(6) && board.content[4] == ""
-      4
-    elsif c_marks.include?(4) && c_marks.include?(6) && board.content[2] == ""
-      2
-    else
-      false
+    @winning_lines.each do |a, b, c|
+      if @board.content[a] == computer_mark && @board.content[b] == computer_mark && @board.content[c] == ""
+        return c
+      elsif @board.content[b] == computer_mark && @board.content[c] == computer_mark && @board.content[a] == ""
+        return a
+      elsif @board.content[a] == computer_mark && @board.content[c] == computer_mark && @board.content[b] == ""
+        return b
+      end
     end
+    false
   end
 
   def blocking_move
