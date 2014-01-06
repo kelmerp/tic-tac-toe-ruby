@@ -15,4 +15,11 @@ describe Board do
       expect(fake.string).to include "|"
     end
   end
+
+  describe '#full?' do
+    it "when the board is full should respond true" do
+      @board.content = ["x","o","x","x","o","x","o","x","x"]
+      expect(@board.full?).to be true
+    end
+  end
 end
