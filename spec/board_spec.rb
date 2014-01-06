@@ -1,16 +1,18 @@
 require 'spec_helper'
 require 'stringio'
 
-describe "#show" do
+describe Board do
   before :each do
-    @game = Game.new
+    @board = Board.new
   end
 
-  it "should output the board" do
-    original_stdout = $stdout
-    $stdout = fake = StringIO.new
-    @game.board.show
-    $stdout = original_stdout
-    expect(fake.string).to include "|"
+  describe '#show' do
+    it "should output the board" do
+      original_stdout = $stdout
+      $stdout = fake = StringIO.new
+      @board.show
+      $stdout = original_stdout
+      expect(fake.string).to include "|"
+    end
   end
 end
