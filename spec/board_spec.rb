@@ -29,4 +29,10 @@ describe Board do
       expect(@board.content).to eq ["x","","","","","","","",""]
     end
   end
+
+  describe '#empty?' do
+    it 'with an empty board should be true' do
+      expect(@board.empty?).to be true
+    end
+  end
 end
