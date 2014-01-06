@@ -22,4 +22,11 @@ describe Board do
       expect(@board.full?).to be true
     end
   end
+
+  describe '#mark' do
+    it 'marks the board at the given index' do
+      @board.mark(0, "x")
+      expect(@board.content).to eq ["x","","","","","","","",""]
+    end
+  end
 end
