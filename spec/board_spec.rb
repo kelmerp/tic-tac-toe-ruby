@@ -11,6 +11,13 @@ describe Board do
       it "returns an array containing the 8 lines on the board" do
         expect(@board.get_lines.size).to eq 8
       end
+    end    
+
+    context "with a 4 X 4 board" do
+      it "returns an array containing the 10 lines on the board" do
+        @board = Board.new(:size => 4)
+        expect(@board.get_lines.size).to eq 10
+      end
     end
   end
 
