@@ -7,8 +7,8 @@ class Game
   attr_reader :first_player, :computer_mark, :human_mark
   attr_accessor :board, :current_player
 
-  def initialize
-    @board = Board.new
+  def initialize(args = {})
+    @board = Board.new(:board_size => args[:board_size])
     @winning_lines = get_winning_lines
     @first_player = get_random_player
     @current_player = @first_player
