@@ -1,6 +1,6 @@
 class Board
   attr_accessor :content
-  attr_reader :lines
+  attr_reader :lines, :size
 
   def initialize(args = {})
     @size = args[:board_size] || 3
