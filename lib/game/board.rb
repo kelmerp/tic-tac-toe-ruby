@@ -3,7 +3,7 @@ class Board
   attr_reader :lines
 
   def initialize(args = {})
-    @size = args[:size] || 3
+    @size = args[:board_size] || 3
     @content = Array.new(@size ** 2, "")
     @lines = get_lines
   end
