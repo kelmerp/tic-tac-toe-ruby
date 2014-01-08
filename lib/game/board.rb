@@ -48,7 +48,7 @@ class Board
   end
 
   def show
-    0.upto(@size ** 2) do |n|
+    0.upto(@size ** 2 - 1) do |n|
       if content[n] == "x" || content[n] == "o"
         print "#{content[n]}"
       else
