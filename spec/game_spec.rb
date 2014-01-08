@@ -6,16 +6,25 @@ describe Game do
   end
 
   describe "#new" do
-    it "creates a Game object" do
-      expect(@game).to be_an_instance_of Game
-    end
+    context "with a default board size of 3" do
+      it "creates a Game object" do
+        expect(@game).to be_an_instance_of Game
+      end
 
-    it "should have an empty board" do
-      expect(@game.board.content).to eq(["","","","","","","","",""])
-    end
+      it "should have an empty board" do
+        expect(@game.board.content).to eq(["","","","","","","","",""])
+      end
 
-    it "should have a current player" do
-      expect(@game.current_player).to be_a Symbol
+      it "should have a current player" do
+        expect(@game.current_player).to be_a Symbol
+      end
+    end    
+
+    context "with a board size of 4" do
+      it "should have an empty 4 X 4 board" do
+        @game = Game.new(:board_size => 4)
+        expect(@game.board.content).to eq(["","","","","","","","","","","","","","","",""])
+      end
     end
   end
 
