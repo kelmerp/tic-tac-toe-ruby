@@ -15,7 +15,7 @@ describe Board do
 
     context "with a 4 X 4 board" do
       it "returns an array containing the 10 lines on the board" do
-        @board = Board.new(:size => 4)
+        @board = Board.new(:board_size => 4)
         expect(@board.get_lines.size).to eq 10
       end
     end
@@ -28,7 +28,7 @@ describe Board do
         $stdout = fake = StringIO.new
         @board.show
         $stdout = original_stdout
-        expect(fake.string).to eq "0|1|2\n3|4|5\n6|7|8\n9|"
+        expect(fake.string).to eq "0|1|2\n3|4|5\n6|7|8\n"
       end
     end
 
@@ -36,10 +36,10 @@ describe Board do
       it "should output a 4 X 4 board" do
         original_stdout = $stdout
         $stdout = fake = StringIO.new
-        @board = Board.new(:size => 4)
+        @board = Board.new(:board_size => 4)
         @board.show
         $stdout = original_stdout
-        expect(fake.string).to eq "0|1|2|3\n4|5|6|7\n8|9|10|11\n12|13|14|15\n16|"
+        expect(fake.string).to eq "0|1|2|3\n4|5|6|7\n8|9|10|11\n12|13|14|15\n"
       end
     end
   end
