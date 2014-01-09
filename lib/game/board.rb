@@ -48,11 +48,7 @@ class Board
   end
 
   def mark(index, player_mark)
-    if @content[index] != ""
-      false
-    else
-      @content[index] = player_mark
-    end
+    @content[index] = player_mark
   end
 
   def empty?
