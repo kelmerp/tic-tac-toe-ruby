@@ -42,7 +42,7 @@ class UI
   end
 
   def self.valid_input?(string, board)
-    string.match(/[0-#{board.size}]/) && board.content[string.to_i] == ""
+    string.match(/[0-#{board.content.size - 1}]/) && board.content[string.to_i] == ""
   end
 
   def self.output_message(string)

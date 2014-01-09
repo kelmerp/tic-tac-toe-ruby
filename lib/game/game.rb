@@ -1,5 +1,6 @@
 require_relative 'board'
 require_relative 'ui'
+require_relative 'rules'
 
 class Game
 
@@ -9,22 +10,15 @@ class Game
   attr_accessor :board, :current_player, :ui
 
   def initialize(args = {})
-    @board = Board.new(:board_size => args[:board_size])
-    @winning_lines = get_winning_lines
+    @rules = Rules.new(:board_size => args[:board_size])
+    @board = @rules.board
+    @winning_lines = @rules.get_winning_lines
     @first_player = get_random_player
     @current_player = @first_player
     @computer_mark = get_computer_mark
     @human_mark = get_human_mark
     @winner = false
     # @ui = UI.new
-  end
-
-  def get_winning_lines
-    rows = [[0,1,2],[3,4,5],[6,7,8]]
-    columns = [[0,3,6],[1,4,7],[2,5,8]]
-    diagonals = [[0,4,8],[2,4,6]]
-
-    rows + columns + diagonals
   end
 
   def get_random_player
@@ -50,31 +44,7 @@ class Game
   end
 
   def over?
-    winner? || board.full?
-  end
-
-  def winner?
-    @winning_lines.each do |a, b, c|
-      return true if board.content[a] == board.content[b] && 
-      board.content[b] == board.content[c] && 
-      board.content[a] != ""
-    end
-    false
-  end
-
-  def get_winner
-    @winning_lines.each do |a, b, c|
-      if board.content[a] == board.content[b] &&
-       board.content[b] == board.content[c] && board.content[a] != ""
-        @winner = board.content[a]
-      end
-    end
-
-    if @winner == "x"
-      @winner = first_player
-    elsif @winner == "o"
-      @winner = second_player
-    end
+    @rules.winner? || board.full?
   end
 
   def get_computer_mark
