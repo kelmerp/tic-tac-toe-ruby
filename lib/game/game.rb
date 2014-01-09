@@ -16,7 +16,7 @@ class Game
     @computer_mark = get_computer_mark
     @human_mark = get_human_mark
     @winner = false
-    @ui = UI.new
+    # @ui = UI.new
   end
 
   def get_winning_lines
@@ -37,7 +37,7 @@ class Game
       UI.print_first_player(@first_player) if first_turn?
 
       if current_player == :computer
-        puts "Executing computer move"
+        UI.output_message("Executing computer move")
         sleep 2
         computer_move
       else
