@@ -39,7 +39,7 @@ class Game
       end
     end
     UI.display(board, computer_mark, human_mark, current_player)
-    get_winner
+    set_winner(@rules.get_winner)
     UI.show_winner(@winner)
   end
 
@@ -164,5 +164,9 @@ class Game
 
   def second_player
     (PLAYERS - [first_player]).pop
+  end
+
+  def set_winner(mark)
+    mark == @computer_mark ? @winner = :computer : @winner = :human
   end
 end
