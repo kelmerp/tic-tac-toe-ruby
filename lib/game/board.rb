@@ -47,22 +47,6 @@ class Board
     @content.include?("") == false
   end
 
-  def show
-    0.upto(@size ** 2 - 1) do |n|
-      if content[n] == "x" || content[n] == "o"
-        print "#{content[n]}"
-      else
-        print "#{n}"
-      end
-
-      if ((n + 1) % @size) == 0
-        print "\n"
-      else
-        print "|"
-      end
-    end
-  end
-
   def mark(index, player_mark)
     if @content[index] != ""
       false

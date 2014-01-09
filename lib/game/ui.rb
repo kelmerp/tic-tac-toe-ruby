@@ -7,7 +7,7 @@ class UI
     puts "computer player is #{computer_mark}"
     puts "you are #{human_mark}"
     puts "-----"
-    board.show
+    self.show_board(board)
     puts "-----"
     puts "Current player: #{current_player}"
   end
@@ -39,6 +39,26 @@ class UI
     end until input
 
     input.to_i
+  end
+
+  def self.output_message(string)
+    puts string
+  end
+
+  def self.show_board(board)
+    0.upto(board.size ** 2 - 1) do |n|
+      if board.content[n] == "x" || board.content[n] == "o"
+        print "#{board.content[n]}"
+      else
+        print "#{n}"
+      end
+
+      if ((n + 1) % board.size) == 0
+        print "\n"
+      else
+        print "|"
+      end
+    end
   end
 
 end
