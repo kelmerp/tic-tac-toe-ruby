@@ -175,17 +175,6 @@ class Game
     end
   end
 
-  # def human_move
-  #   begin
-  #     puts "type the number where you want to place your marker or q to quit"
-  #     print ">"
-  #     input = gets.strip
-  #     exit if input.downcase == "q"
-  #     redo unless input.match(/[0-8]/)
-  #   end until board.mark(input.to_i, human_mark)
-  #   next_player
-  # end
-
   def human_move
     board.mark(UI.human_input(@board), human_mark)
     next_player
