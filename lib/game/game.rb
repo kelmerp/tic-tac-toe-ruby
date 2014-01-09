@@ -1,11 +1,12 @@
 require_relative 'board'
+require_relative 'ui'
 
 class Game
 
   PLAYERS = [:computer, :human]
 
   attr_reader :first_player, :computer_mark, :human_mark
-  attr_accessor :board, :current_player
+  attr_accessor :board, :current_player, :ui
 
   def initialize(args = {})
     @board = Board.new(:board_size => args[:board_size])
@@ -15,6 +16,7 @@ class Game
     @computer_mark = get_computer_mark
     @human_mark = get_human_mark
     @winner = false
+    # @ui = UI.new
   end
 
   def get_winning_lines
@@ -31,19 +33,20 @@ class Game
 
   def play
     until over?
-      display
-      print_first_player if first_turn?
+      UI.display(board, computer_mark, human_mark, current_player)
+      UI.print_first_player(@first_player) if first_turn?
 
       if current_player == :computer
-        puts "Executing computer move"
+        UI.output_message("Executing computer move")
         sleep 2
         computer_move
       else
         human_move
       end
     end
-    display
-    show_winner
+    UI.display(board, computer_mark, human_mark, current_player)
+    get_winner
+    UI.show_winner(@winner)
   end
 
   def over?
@@ -74,14 +77,6 @@ class Game
     end
   end
 
-  def print_first_player
-    if first_player == :computer
-      puts "Computer gets to go first"
-    else
-      puts "You get to go first"
-    end
-  end
-
   def get_computer_mark
     if first_player == :computer
       "x"
@@ -96,18 +91,6 @@ class Game
     else
       "o"
     end
-  end
-
-  def display
-    system("clear")
-    puts "Tic-Tac Toe"
-    puts "-----------"
-    puts "computer player is #{computer_mark}"
-    puts "you are #{human_mark}"
-    puts "-----"
-    board.show
-    puts "-----"
-    puts "Current player: #{current_player}"
   end
 
   def computer_move
@@ -193,13 +176,7 @@ class Game
   end
 
   def human_move
-    begin
-      puts "type the number where you want to place your marker or q to quit"
-      print ">"
-      input = gets.strip
-      exit if input.downcase == "q"
-      redo unless input.match(/[0-8]/)
-    end until board.mark(input.to_i, human_mark)
+    board.mark(UI.human_input(@board), human_mark)
     next_player
   end
 
@@ -213,15 +190,6 @@ class Game
 
   def first_turn?
     board.empty?
-  end
-
-  def show_winner
-    get_winner
-    if @winner
-      puts "#{@winner} is the winner"
-    else
-      puts "The game is a tie"
-    end
   end
 
   def second_player

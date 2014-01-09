@@ -1,6 +1,6 @@
 class Board
   attr_accessor :content
-  attr_reader :lines
+  attr_reader :lines, :size
 
   def initialize(args = {})
     @size = args[:board_size] || 3
@@ -47,28 +47,8 @@ class Board
     @content.include?("") == false
   end
 
-  def show
-    0.upto(@size ** 2 - 1) do |n|
-      if content[n] == "x" || content[n] == "o"
-        print "#{content[n]}"
-      else
-        print "#{n}"
-      end
-
-      if ((n + 1) % @size) == 0
-        print "\n"
-      else
-        print "|"
-      end
-    end
-  end
-
   def mark(index, player_mark)
-    if @content[index] != ""
-      false
-    else
-      @content[index] = player_mark
-    end
+    @content[index] = player_mark
   end
 
   def empty?
