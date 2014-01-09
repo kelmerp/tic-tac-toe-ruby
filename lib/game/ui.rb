@@ -1,4 +1,3 @@
-require 'debugger'
 class UI
 
   def self.display(board, computer_mark, human_mark, current_player)
