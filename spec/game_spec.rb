@@ -50,17 +50,6 @@ describe Game do
     end
   end
 
-  describe "#winner?" do
-    it "should return true if there is a winner" do
-      @game.board.content = ["o","","x","o","x","","o","x",""]
-      expect(@game.winner?).to be_true
-    end
-
-    it "should return false if there is no winner" do
-      expect(@game.winner?).to be_false
-    end
-  end
-
   describe "#get_computer_mark" do
     it "should return an x or o" do
       expect(@game.get_computer_mark).to be_a String
