@@ -37,5 +37,7 @@ class Rules
         end
       end
     end
+
+    nil
   end
 end
