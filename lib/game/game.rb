@@ -167,6 +167,10 @@ class Game
   end
 
   def set_winner(mark)
-    mark == @computer_mark ? @winner = :computer : @winner = :human
+    if mark == @computer_mark
+      @winner = :computer
+    elsif mark == @human_mark
+      @winner = :human
+    end
   end
 end
