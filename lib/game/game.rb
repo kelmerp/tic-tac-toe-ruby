@@ -10,8 +10,8 @@ class Game
   attr_accessor :board, :current_player, :ui
 
   def initialize(args = {})
-    @rules = Rules.new(:board_size => args[:board_size])
-    @board = @rules.board
+    @board = Board.new(:board_size => args[:board_size])
+    @rules = Rules.new(:board => board)
     @winning_lines = @rules.get_winning_lines
     @first_player = get_random_player
     @current_player = @first_player
