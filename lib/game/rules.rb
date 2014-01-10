@@ -4,7 +4,7 @@ class Rules
   attr_reader :board, :num_needed_to_win
   
   def initialize(args = {})
-    @board = Board.new(:board_size => args[:board_size])
+    @board = args[:board]
     @num_needed_to_win = @board.size
     @winning_lines = get_winning_lines
   end
