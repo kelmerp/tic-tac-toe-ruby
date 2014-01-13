@@ -1,10 +1,9 @@
 require_relative 'board'
 require_relative 'ui'
 require_relative 'rules'
+require_relative 'player'
 
 class Game
-
-  PLAYERS = [:computer, :human]
 
   attr_reader :first_player, :computer_mark, :human_mark
   attr_accessor :board, :current_player, :ui
@@ -12,17 +11,29 @@ class Game
   def initialize(args = {})
     @board = Board.new(:board_size => args[:board_size])
     @rules = Rules.new(:board => board)
+    @players = Player.generate_players.shuffle!
     @winning_lines = @rules.get_winning_lines
-    @first_player = get_random_player
+    @first_player = @players.first
     @current_player = @first_player
     @computer_mark = get_computer_mark
     @human_mark = get_human_mark
     @winner = false
-    # @ui = UI.new
   end
 
-  def get_random_player
-    PLAYERS.sample
+  def get_computer_mark
+    if first_player.type == :computer
+      "x"
+    else
+      "o"
+    end
+  end
+
+  def get_human_mark
+    if first_player.type == :human
+      "x"
+    else
+      "o"
+    end
   end
 
   def play
@@ -30,7 +41,7 @@ class Game
       UI.display(board, computer_mark, human_mark, current_player)
       UI.print_first_player(@first_player) if first_turn?
 
-      if current_player == :computer
+      if current_player.type == :computer
         UI.output_message("Executing computer move")
         sleep 2
         computer_move
@@ -45,22 +56,6 @@ class Game
 
   def over?
     @rules.winner? || board.full?
-  end
-
-  def get_computer_mark
-    if first_player == :computer
-      "x"
-    else
-      "o"
-    end
-  end
-
-  def get_human_mark
-    if first_player == :human
-      "x"
-    else
-      "o"
-    end
   end
 
   def computer_move
@@ -108,11 +103,11 @@ class Game
     h = human_mark
     c = computer_mark
 
-    if first_player == :computer && board.content[0] == ""
+    if first_player.type == :computer && board.content[0] == ""
       0
-    elsif first_player == :human  && board.content[4] == ""
+    elsif first_player.type == :human  && board.content[4] == ""
       4
-    elsif first_player == :computer && board.content[4] == ""
+    elsif first_player.type == :computer && board.content[4] == ""
       4
     elsif board.content[0] == c && board.content[4] == h && board.content[8] == ""
       8
@@ -151,11 +146,7 @@ class Game
   end
 
   def next_player
-    if self.current_player == :human
-      self.current_player = :computer
-    else
-      self.current_player = :human
-    end
+    self.current_player = (@players - [self.current_player]).pop
   end
 
   def first_turn?

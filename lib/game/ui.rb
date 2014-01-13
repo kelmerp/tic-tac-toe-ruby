@@ -9,11 +9,11 @@ class UI
     puts "-----"
     self.show_board(board)
     puts "-----"
-    puts "Current player: #{current_player}"
+    puts "Current player: #{current_player.type}"
   end
 
   def self.print_first_player(first_player)
-    if first_player == :computer
+    if first_player.type == :computer
       puts "Computer gets to go first"
     else
       puts "You get to go first"
