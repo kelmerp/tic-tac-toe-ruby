@@ -16,7 +16,7 @@ describe Game do
       end
 
       it "should have a current player" do
-        expect(@game.current_player).to be_a Symbol
+        expect(@game.current_player).to be_a Player
       end
     end    
 
@@ -25,12 +25,6 @@ describe Game do
         @game = Game.new(:board_size => 4)
         expect(@game.board.content).to eq(["","","","","","","","","","","","","","","",""])
       end
-    end
-  end
-
-  describe "#get_random_player" do
-    it "should return a player" do
-      expect(@game.get_random_player).to be_a Symbol
     end
   end
 
@@ -92,8 +86,10 @@ describe Game do
     context "when blocking 'L'-shaped traps" do
 
       before :each do
-        @game.stub(:first_player => :human)
-        @game.current_player = :computer
+        first_player = double(:type => :human)
+        current_player = double(:type => :computer)
+        @game.stub(:first_player => first_player)
+        @game.stub(:current_player => current_player)
         @game.stub(:computer_mark => "o")
         @game.stub(:human_mark => "x")
       end
