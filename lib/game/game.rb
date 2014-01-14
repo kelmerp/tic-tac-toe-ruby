@@ -29,19 +29,11 @@ class Game
   end
 
   def get_computer_mark
-    if first_player.type == :computer
-      "x"
-    else
-      "o"
-    end
+    first_player.type == :computer ? "x" : "o"
   end
 
   def get_human_mark
-    if first_player.type == :human
-      "x"
-    else
-      "o"
-    end
+    first_player.type == :human ? "x" : "o"
   end
 
   def play
