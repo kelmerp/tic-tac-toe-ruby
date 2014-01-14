@@ -2,22 +2,30 @@ require_relative 'board'
 require_relative 'ui'
 require_relative 'rules'
 require_relative 'player'
+require_relative 'ai'
 
 class Game
 
-  attr_reader :first_player, :computer_mark, :human_mark
+  attr_reader :first_player, :computer_mark, :human_mark, :ai
   attr_accessor :board, :current_player, :ui
 
   def initialize(args = {})
     @board = Board.new(:board_size => args[:board_size])
     @rules = Rules.new(:board => board)
     @players = Player.generate_players.shuffle!
+    @ai = get_ai(args[:ai_level])
     @winning_lines = @rules.get_winning_lines
     @first_player = @players.first
     @current_player = @first_player
     @computer_mark = get_computer_mark
     @human_mark = get_human_mark
     @winner = false
+  end
+
+  def get_ai(ai_level = :medium)
+    if ai_level == nil || :medium
+      ProceduralAI.new
+    end
   end
 
   def get_computer_mark
@@ -59,85 +67,9 @@ class Game
   end
 
   def computer_move
-    h = human_mark
-    next_move = false
-
-    if next_move = winning_move #returns index of winning move or false
-      board.mark(next_move, computer_mark)
-    elsif next_move = blocking_move #returns index of blocking move or false
-      board.mark(next_move, computer_mark)
-    else
-      board.mark(best_move, computer_mark)
-    end
-
+    position_to_mark = ai.get_move(@winning_lines, board, computer_mark, human_mark, first_player)
+    board.mark(position_to_mark, computer_mark)
     next_player
-  end
-
-  def winning_move
-    @winning_lines.each do |a, b, c|
-      if @board.content[a] == computer_mark && @board.content[b] == computer_mark && @board.content[c] == ""
-        return c
-      elsif @board.content[b] == computer_mark && @board.content[c] == computer_mark && @board.content[a] == ""
-        return a
-      elsif @board.content[a] == computer_mark && @board.content[c] == computer_mark && @board.content[b] == ""
-        return b
-      end
-    end
-    false
-  end
-
-  def blocking_move
-    @winning_lines.each do |a, b, c|
-      if @board.content[a] == human_mark && @board.content[b] == human_mark && @board.content[c] == ""
-        return c
-      elsif @board.content[b] == human_mark && @board.content[c] == human_mark && @board.content[a] == ""
-        return a
-      elsif @board.content[a] == human_mark && @board.content[c] == human_mark && @board.content[b] == ""
-        return b
-      end
-    end
-    false
-  end
-
-  def best_move
-    h = human_mark
-    c = computer_mark
-
-    if first_player.type == :computer && board.content[0] == ""
-      0
-    elsif first_player.type == :human  && board.content[4] == ""
-      4
-    elsif first_player.type == :computer && board.content[4] == ""
-      4
-    elsif board.content[0] == c && board.content[4] == h && board.content[8] == ""
-      8
-    elsif board.content[0] == h && board.content[8] == h && board.content[1] == ""
-      1
-    elsif board.content[2] == h && board.content[6] == h && board.content[1] == ""
-      1
-    elsif board.content[0] == c && board.content[4] == c && board.content[1] == h && board.content[6] == ""
-      6
-    elsif board.content[4] == h && board.content[8] == h && board.content[2] == ""
-      2
-    elsif board.content[0] == h && board.content[7] == h && board.content[6] == ""
-      6    
-    elsif board.content[6] == h && board.content[5] == h && board.content[8] == ""
-      8    
-    elsif board.content[8] == h && board.content[1] == h && board.content[2] == ""
-      2    
-    elsif board.content[2] == h && board.content[3] == h && board.content[0] == ""
-      0
-    elsif board.content[1] == h && board.content[6] == h && board.content[0] == ""
-      0 
-    elsif board.content[3] == h && board.content[8] == h && board.content[6] == ""
-      6   
-    elsif board.content[7] == h && board.content[2] == h && board.content[8] == ""
-      8
-    elsif board.content[5] == h && board.content[0] == h && board.content[2] == ""
-      2
-    else
-      board.content.index("")
-    end
   end
 
   def human_move
