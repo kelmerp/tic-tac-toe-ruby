@@ -77,10 +77,6 @@ class Game
     board.empty?
   end
 
-  def second_player
-    (PLAYERS - [first_player]).pop
-  end
-
   def set_winner(mark)
     if mark == @computer_mark
       @winner = :computer
