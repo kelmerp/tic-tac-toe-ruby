@@ -62,6 +62,7 @@ describe Game do
     end
 
     it "plays a turn for the computer player" do
+      @game.stub(:current_player => ComputerPlayer.new)
       @game.computer_move
       expect(@game.board.empty?).to be_false
     end
