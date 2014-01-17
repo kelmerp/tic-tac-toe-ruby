@@ -2,7 +2,6 @@ require_relative 'board'
 require_relative 'ui'
 require_relative 'rules'
 require_relative 'player'
-require_relative 'ai'
 
 class Game
 
@@ -12,20 +11,13 @@ class Game
   def initialize(args = {})
     @board = Board.new(:board_size => args[:board_size])
     @rules = Rules.new(:board => board)
-    @players = Player.generate_players.shuffle!
-    @ai = get_ai(args[:ai_level])
+    @players = Player.generate_players(:ai_level => args[:ai_level])
     @winning_lines = @rules.get_winning_lines
-    @first_player = @players.first
+    @first_player = @players.sample
     @current_player = @first_player
     @computer_mark = get_computer_mark
     @human_mark = get_human_mark
     @winner = false
-  end
-
-  def get_ai(ai_level = :medium)
-    if ai_level == nil || :medium
-      ProceduralAI.new
-    end
   end
 
   def get_computer_mark
@@ -42,8 +34,6 @@ class Game
       UI.print_first_player(@first_player) if first_turn?
 
       if current_player.type == :computer
-        UI.output_message("Executing computer move")
-        sleep 2
         computer_move
       else
         human_move
@@ -59,7 +49,9 @@ class Game
   end
 
   def computer_move
-    position_to_mark = ai.get_move(@winning_lines, board, computer_mark, human_mark, first_player)
+    UI.output_message("Executing computer move")
+    sleep 2
+    position_to_mark = current_player.ai.get_move(@winning_lines, board, computer_mark, human_mark, first_player)
     board.mark(position_to_mark, computer_mark)
     next_player
   end
