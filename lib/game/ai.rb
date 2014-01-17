@@ -1,3 +1,9 @@
+class AI
+  def self.generate(ai_level = nil)
+    ProceduralAI.new
+  end
+end
+
 class ProceduralAI
   def get_move(winning_lines, board, computer_mark, human_mark, first_player)
     next_move = false
