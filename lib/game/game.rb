@@ -60,7 +60,7 @@ class Game
   end
 
   def next_player
-    @current_player = (@players - [self.current_player]).pop
+    @current_player = (@players - [@current_player]).pop
   end
 
   def first_turn?
