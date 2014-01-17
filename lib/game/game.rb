@@ -5,8 +5,7 @@ require_relative 'player'
 
 class Game
 
-  attr_reader :first_player, :computer_mark, :human_mark, :ai
-  attr_accessor :board, :current_player, :ui
+  attr_reader :first_player, :computer_mark, :human_mark, :current_player, :board
 
   def initialize(args = {})
     @board = Board.new(:board_size => args[:board_size])
@@ -61,7 +60,7 @@ class Game
   end
 
   def next_player
-    self.current_player = (@players - [self.current_player]).pop
+    @current_player = (@players - [self.current_player]).pop
   end
 
   def first_turn?
