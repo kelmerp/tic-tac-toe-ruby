@@ -17,7 +17,6 @@ class Game
     @current_player = @first_player
     @computer_mark = get_computer_mark
     @human_mark = get_human_mark
-    @winner = false
   end
 
   def get_computer_mark
