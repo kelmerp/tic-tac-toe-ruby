@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'stringio'
 
 describe Game do
   before :each do
@@ -51,6 +52,15 @@ describe Game do
   end
 
   describe "#computer_move" do
+    before :all do
+      @original_stdout = $stdout
+      $stdout = StringIO.new
+    end
+
+    after :all do
+      $stdout = @original_stdout
+    end
+
     it "plays a turn for the computer player" do
       @game.computer_move
       expect(@game.board.empty?).to be_false
