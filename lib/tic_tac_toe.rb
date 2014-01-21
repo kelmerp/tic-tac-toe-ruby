@@ -3,7 +3,46 @@ require_relative './game/game'
 play_again = true
 
 while play_again
-  game = Game.new
+  puts "Welcome to Tic-Tac-Toe"
+  puts "----------------------"
+
+  puts "Will Player 1 be a human or computer player?"
+  puts " (enter 'h' for human or 'c' for computer)"
+  print ">"
+  player1_type = gets.strip
+  if player1_type == 'c'
+    puts "Set computer AI to easy or hard?"
+    puts " (enter 'e' for easy or 'h' for hard)"
+    print ">"
+    player1_ai = gets.strip
+    player1_name = "Computer Joe"
+  else
+    puts "What is the name of this player?"
+    print ">"
+    player1_name = gets.strip
+  end
+
+  puts "Will Player 2 be a human or computer player?"
+  puts " (enter 'h' for human and 'c' for computer)"
+  print ">"
+  player2_type = gets.strip
+  if player2_type == 'c'
+    puts "Set computer AI to easy or hard?"
+    puts " (enter 'e' for easy or 'h' for hard)"
+    print ">"
+    player2_ai = gets.strip
+    player2_name = "Computer Jane"
+  else
+    puts "What is the name of this player?"
+    print ">"
+    player2_name = gets.strip
+  end
+
+  players = {:player1 => {:type => player1_type, :ai_level => player1_ai, :name => player1_name}, 
+              :player2 => {:type => player2_type, :ai_level => player2_ai, :name => player2_name}}
+
+ 
+  game = Game.new(:players => players)
   game.play
   puts "Would you like to play again? (y or n)"
   print ">"

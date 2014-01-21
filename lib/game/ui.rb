@@ -1,28 +1,29 @@
 class UI
 
-  def self.display(board, computer_mark, human_mark, current_player)
+  def self.display(board, first_player, second_player, current_player)
     system("clear")
     puts "Tic-Tac Toe"
     puts "-----------"
-    puts "computer player is #{computer_mark}"
-    puts "you are #{human_mark}"
+    puts "#{first_player.name} is #{first_player.mark}"
+    puts "#{second_player.name} is #{second_player.mark}"
     puts "-----"
     self.show_board(board)
     puts "-----"
-    puts "Current player: #{current_player.type}"
+    puts "Current player: #{current_player.name}"
   end
 
   def self.print_first_player(first_player)
-    if first_player.type == :computer
-      puts "Computer gets to go first"
-    else
-      puts "You get to go first"
-    end
+    # if first_player.type == :computer
+    #   puts "Computer gets to go first"
+    # else
+    #   puts "You get to go first"
+    # end
+    puts "#{first_player.name} goes first."
   end
 
   def self.show_winner(winner)
     if winner
-      puts "#{winner} is the winner"
+      puts "#{winner.name} is the winner"
     else
       puts "The game is a tie"
     end

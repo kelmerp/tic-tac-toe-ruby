@@ -1,19 +1,21 @@
 require_relative 'ai'
 
 class Player
-  attr_reader :type
+  attr_accessor :mark
+  attr_reader :name
 
-  def self.generate_players(args = {})
-    players = []
+  def self.generate_players(players)
+    players_array = []
 
-    players << ComputerPlayer.new(:type => :computer, :ai_level => args[:ai_level] )
-    players << Player.new(:type => :human)
+    players.each_key do |player|
+      if players[player][:type] == 'c'
+        players_array << ComputerPlayer.new(:ai_level => players[player][:ai_type], :name => players[player][:name])
+      else
+        players_array << HumanPlayer.new(:name => players[player][:name])
+      end  
+    end
 
-    players
-  end
-
-  def initialize(args = {})
-    @type = args[:type]
+    players_array
   end
 end
 
@@ -21,7 +23,25 @@ class ComputerPlayer < Player
   attr_reader :ai
 
   def initialize(args = {})
-    @type = args[:type]
     @ai = AI.generate(args[:ai_level])
+    @name = args[:name]
+  end
+
+  # def move(winning_lines, board, first_player, second_player, first_player)
+  def move(game_state)
+    # position_to_mark = ai.get_move(winning_lines, board, first_player_mark, second_player_mark, first_player)
+    position_to_mark = ai.get_move(game_state)
+    game_state.board.mark(position_to_mark, game_state.current_player.mark)
+  end
+end
+
+class HumanPlayer < Player
+  def initialize(args = {})
+    @name = args[:name]
+  end
+
+  def move(game_state)
+    position_to_mark = UI.human_input(game_state.board)
+    game_state.board.mark(position_to_mark, game_state.current_player.mark)
   end
 end
