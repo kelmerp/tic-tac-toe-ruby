@@ -15,6 +15,11 @@ while play_again
     puts " (enter 'e' for easy or 'h' for hard)"
     print ">"
     player1_ai = gets.strip
+    player1_name = "Computer Joe"
+  else
+    puts "What is the name of this player?"
+    print ">"
+    player1_name = gets.strip
   end
 
   puts "Will Player 2 be a human or computer player?"
@@ -26,10 +31,15 @@ while play_again
     puts " (enter 'e' for easy or 'h' for hard)"
     print ">"
     player2_ai = gets.strip
+    player2_name = "Computer Jane"
+  else
+    puts "What is the name of this player?"
+    print ">"
+    player2_name = gets.strip
   end
 
-  players = {:player1 => {:type => player1_type, :ai_level => player1_ai},
-              :player2 => {:type => player2_type, :ai_level => player2_ai}}
+  players = {:player1 => {:type => player1_type, :ai_level => player1_ai, :name => player1_name}, 
+              :player2 => {:type => player2_type, :ai_level => player2_ai, :name => player2_name}}
 
  
   game = Game.new(:players => players)
