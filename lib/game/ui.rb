@@ -1,4 +1,9 @@
 class UI
+  def self.welcome
+    system('clear')
+    puts "Welcome to Tic-Tac-Toe"
+    puts "----------------------"
+  end
 
   def self.get_players
     puts "Will Player 1 be a human or computer player?"
@@ -101,6 +106,17 @@ class UI
       else
         print "|"
       end
+    end
+  end
+
+  def self.player_again?
+    puts "Would you like to play again? (y or n)"
+    print ">"
+    answer = gets.chomp
+    if answer == 'y'
+      true
+    else
+      false
     end
   end
 
