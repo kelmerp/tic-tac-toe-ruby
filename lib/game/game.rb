@@ -13,16 +13,10 @@ class Game
     @players = Player.generate_players(args[:players])
     @winning_lines = @rules.get_winning_lines
     @first_player = @players.sample
-    @second_player = (@players - [@current_player]).pop
+    @second_player = (@players - [@first_player]).pop
     @current_player = @first_player
-    @current_player_opponent = (@players - [@current_player]).pop
-    # set_player_marks
+    @current_player_opponent = @second_player
   end
-
-  # def set_player_marks
-  #   @first_player.mark = "x"
-  #   @second_player.mark = "o"
-  # end
 
   def play
     until over?
