@@ -22,7 +22,10 @@ class Game
     until over?
       UI.display(board, first_player, second_player, current_player)
       UI.print_first_player(@first_player) if first_turn?
-      current_player.move(self)
+      current_player.move(:current_player => current_player, :board => board,
+                          :winning_lines => winning_lines, 
+                          :current_player_opponent => current_player_opponent,
+                          :first_player => first_player)
       next_player
     end 
     UI.display(board, first_player, second_player, current_player)

@@ -109,7 +109,7 @@ class UI
     end
   end
 
-  def self.player_again?
+  def self.play_again?
     puts "Would you like to play again? (y or n)"
     print ">"
     answer = gets.chomp

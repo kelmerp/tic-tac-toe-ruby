@@ -7,5 +7,5 @@ while play_again
   players = UI.get_players
   game = Game.new(:players => players)
   game.play
-  player_again = UI.play_again?
+  play_again = UI.play_again?
 end

@@ -28,9 +28,9 @@ class ComputerPlayer < Player
     @mark = args[:mark]
   end
 
-  def move(game_state)
-    position_to_mark = ai.get_move(game_state)
-    game_state.board.mark(position_to_mark, game_state.current_player.mark)
+  def move(args)
+    position_to_mark = ai.get_move(args)
+    args[:board].mark(position_to_mark, args[:current_player].mark)
   end
 end
 
@@ -40,8 +40,8 @@ class HumanPlayer < Player
     @mark = args[:mark]
   end
 
-  def move(game_state)
-    position_to_mark = UI.human_input(game_state.board)
-    game_state.board.mark(position_to_mark, game_state.current_player.mark)
+  def move(args)
+    position_to_mark = UI.human_input(args[:board])
+    args[:board].mark(position_to_mark, args[:current_player].mark)
   end
 end

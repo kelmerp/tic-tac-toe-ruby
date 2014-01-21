@@ -9,23 +9,23 @@ class AI
 end
 
 class EasyAI
-  def get_move(game_state)
-    array_of_available_space = game_state.board.content.each_with_index.map { |pos, index| index if pos == "" } 
+  def get_move(args)
+    array_of_available_space = args[:board].content.each_with_index.map { |pos, index| index if pos == "" } 
     array_of_available_space.compact!
     array_of_available_space.sample
   end
 end
 
 class ProceduralAI
-  def get_move(game_state)
+  def get_move(args)
     next_move = false
 
-    if next_move = winning_move(game_state.winning_lines, game_state.board, game_state.current_player.mark) #returns index of winning move or false
+    if next_move = winning_move(args[:winning_lines], args[:board], args[:current_player].mark) #returns index of winning move or false
       next_move
-    elsif next_move = blocking_move(game_state.winning_lines, game_state.board, game_state.current_player_opponent.mark) #returns index of blocking move or false
+    elsif next_move = blocking_move(args[:winning_lines], args[:board], args[:current_player_opponent].mark) #returns index of blocking move or false
       next_move
     else
-      best_move(game_state.winning_lines, game_state.board, game_state.current_player, game_state.current_player_opponent, game_state.first_player)
+      best_move(args[:winning_lines], args[:board], args[:current_player], args[:current_player_opponent], args[:first_player])
     end
   end
 
