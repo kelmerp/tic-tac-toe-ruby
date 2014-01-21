@@ -9,9 +9,9 @@ class Player
 
     players.each_key do |player|
       if players[player][:type] == 'c'
-        players_array << ComputerPlayer.new(:ai_level => players[player][:ai_level], :name => players[player][:name])
+        players_array << ComputerPlayer.new(:ai_level => players[player][:ai_level], :name => players[player][:name], :mark => players[player][:mark])
       else
-        players_array << HumanPlayer.new(:name => players[player][:name])
+        players_array << HumanPlayer.new(:name => players[player][:name], :mark => players[player][:mark])
       end  
     end
 
@@ -25,6 +25,7 @@ class ComputerPlayer < Player
   def initialize(args = {})
     @ai = AI.generate(args[:ai_level])
     @name = args[:name]
+    @mark = args[:mark]
   end
 
   def move(game_state)
@@ -36,6 +37,7 @@ end
 class HumanPlayer < Player
   def initialize(args = {})
     @name = args[:name]
+    @mark = args[:mark]
   end
 
   def move(game_state)

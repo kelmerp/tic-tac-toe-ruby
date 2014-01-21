@@ -13,8 +13,8 @@ class Rules
     board.get_lines
   end
   
-  def winner?
-    ["x","o"].each do |mark|
+  def winner?(player1, player2)
+    [player1.mark, player2.mark].each do |mark|
       @winning_lines.each do |line|
         counter = 0
         line.each do |position|
@@ -27,8 +27,8 @@ class Rules
     false
   end
 
-  def get_winner
-    ["x","o"].each do |mark|
+  def get_winner(player1, player2)
+    [player1.mark, player2.mark].each do |mark|
       @winning_lines.each do |line|
         counter = 0
         line.each do |position|

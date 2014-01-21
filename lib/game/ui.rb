@@ -16,6 +16,9 @@ class UI
       print ">"
       player1_name = gets.strip
     end
+    puts "What mark would you like to use for this player? (traditionally x and o are used)"
+    print ">"
+    player1_mark = gets.strip
 
     puts "Will Player 2 be a human or computer player?"
     puts " (enter 'h' for human and 'c' for computer)"
@@ -32,9 +35,12 @@ class UI
       print ">"
       player2_name = gets.strip
     end
+    puts "What mark would you like to use for this player? (traditionally x and o are used)"
+    print ">"
+    player2_mark = gets.strip
 
-    players = {:player1 => {:type => player1_type, :ai_level => player1_ai, :name => player1_name}, 
-              :player2 => {:type => player2_type, :ai_level => player2_ai, :name => player2_name}}
+    players = {:player1 => {:type => player1_type, :ai_level => player1_ai, :name => player1_name, :mark => player1_mark}, 
+              :player2 => {:type => player2_type, :ai_level => player2_ai, :name => player2_name, :mark => player2_mark}}
   end
 
   def self.display(board, first_player, second_player, current_player)
@@ -84,10 +90,10 @@ class UI
 
   def self.show_board(board)
     0.upto(board.size ** 2 - 1) do |n|
-      if board.content[n] == "x" || board.content[n] == "o"
-        print "#{board.content[n]}"
-      else
+      if board.content[n] == ""
         print "#{n}"
+      else
+        print "#{board.content[n]}"
       end
 
       if ((n + 1) % board.size) == 0

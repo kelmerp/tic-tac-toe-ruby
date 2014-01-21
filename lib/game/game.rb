@@ -16,13 +16,13 @@ class Game
     @second_player = (@players - [@current_player]).pop
     @current_player = @first_player
     @current_player_opponent = (@players - [@current_player]).pop
-    set_player_marks
+    # set_player_marks
   end
 
-  def set_player_marks
-    @first_player.mark = "x"
-    @second_player.mark = "o"
-  end
+  # def set_player_marks
+  #   @first_player.mark = "x"
+  #   @second_player.mark = "o"
+  # end
 
   def play
     until over?
@@ -32,12 +32,12 @@ class Game
       next_player
     end 
     UI.display(board, first_player, second_player, current_player)
-    set_winner(@rules.get_winner)
+    set_winner(@rules.get_winner(first_player, second_player))
     UI.show_winner(@winner)
   end
 
   def over?
-    @rules.winner? || board.full?
+    @rules.winner?(first_player, second_player) || board.full?
   end
 
   def next_player
