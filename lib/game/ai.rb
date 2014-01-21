@@ -1,6 +1,6 @@
 class AI
   def self.generate(ai_level = nil)
-    if ai_level == :easy
+    if ai_level == 'e'
       EasyAI.new
     else
       ProceduralAI.new
@@ -9,15 +9,14 @@ class AI
 end
 
 class EasyAI
-  def get_move(winning_lines, board, computer_mark, human_mark, first_player)
-    array_of_available_space = board.content.each_with_index.map { |pos, index| index if pos == "" } 
+  def get_move(game_state)
+    array_of_available_space = game_state.board.content.each_with_index.map { |pos, index| index if pos == "" } 
     array_of_available_space.compact!
     array_of_available_space.sample
   end
 end
 
 class ProceduralAI
-  # def get_move(winning_lines, board, computer_mark, human_mark, first_player)
   def get_move(game_state)
     next_move = false
 
