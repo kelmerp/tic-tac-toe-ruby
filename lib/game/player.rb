@@ -1,10 +1,14 @@
 require_relative 'ai'
 
 class Player
+  DEFAULT_PLAYERS = {:player1 => {:type => 'c', :ai_level => 'h', :mark => 'x'}, 
+              :player2 => {:type => 'c', :ai_level => 'h', :mark => 'o'}}
+  
   attr_accessor :mark
   attr_reader :name
 
-  def self.generate_players(players)
+  def self.generate_players(players = {})
+    players = DEFAULT_PLAYERS if players == nil
     players_array = []
 
     players.each_key do |player|
