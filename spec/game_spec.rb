@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'stringio'
 
 describe Game do
   before :each do
