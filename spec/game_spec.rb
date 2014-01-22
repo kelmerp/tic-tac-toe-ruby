@@ -45,26 +45,11 @@ describe Game do
     end
   end
 
-  describe "#get_computer_mark" do
-    it "should return an x or o" do
-      expect(@game.get_computer_mark).to be_a String
-    end
-  end
-
-  describe "#computer_move" do
-    before :all do
-      @original_stdout = $stdout
-      $stdout = StringIO.new
-    end
-
-    after :all do
-      $stdout = @original_stdout
-    end
-
-    it "plays a turn for the computer player" do
-      @game.stub(:current_player => ComputerPlayer.new)
-      @game.computer_move
-      expect(@game.board.empty?).to be_false
+  describe "#next_player" do
+    it "should change the current player to the other player" do
+      player = @game.current_player
+      @game.next_player
+      expect(@game.current_player).not_to eq player
     end
   end
 end
